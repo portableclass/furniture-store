@@ -19,5 +19,6 @@
     <Folder Include="Data\Mocks\" />
     <Folder Include="Data\Interfaces\" />
     <Folder Include="Views\Products\" />
+    <Folder Include="wwwroot\img" />
   </ItemGroup>
 </Project>
