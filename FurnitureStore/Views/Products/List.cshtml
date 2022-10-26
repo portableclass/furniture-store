@@ -1,0 +1,26 @@
+﻿@using FurnitureStore.Data.Models
+@model IEnumerable<Product>
+ 
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width-device-width" />
+        <title>List</title>
+    </head>
+    <body>
+        <h2>All products</h2>
+        @{
+            foreach(var product in Model)
+            {
+                <div>
+                    <h2>Name: @product.Name</h2>
+                    <p>Price: @product.Price.ToString("c")</p>
+                </div>
+            }
+        }
+    </body>
+</html>
