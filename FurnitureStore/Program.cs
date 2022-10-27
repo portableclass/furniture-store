@@ -1,13 +1,12 @@
 ﻿using FurnitureStore.Data;
 using FurnitureStore.Data.Interfaces;
-using FurnitureStore.Data.Mocks;
 using FurnitureStore.Data.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<AppDataBaseContent>(options =>
+builder.Services.AddDbContext<AppDataBaseContext>(options =>
 	options.UseSqlServer(
 		builder
 			.Configuration
@@ -19,6 +18,11 @@ builder.Services.AddTransient<IAllProducts, ProductRepository>();
 builder.Services.AddTransient<IAllOrders, OrderRepository>();
 builder.Services.AddTransient<IAllWorkers, WorkerRepository>();
 builder.Services.AddTransient<IAllCustomers, CustomerRepository>();
+//builder.Services.AddTransient<IAllStorages, MockStorage>();
+//builder.Services.AddTransient<IAllProducts, MockProduct>();
+//builder.Services.AddTransient<IAllOrders, MockOrder>();
+//builder.Services.AddTransient<IAllWorkers, MockWorker>();
+//builder.Services.AddTransient<IAllCustomers, MockCustomer>();
 builder.Services.AddMvc();
 
 var app = builder.Build();
@@ -38,5 +42,10 @@ app.UseStaticFiles();
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Products}/{action=List}");
+
+using (var scope = app.Services.CreateScope()) {
+	AppDataBaseContext ctx = scope.ServiceProvider.GetRequiredService<AppDataBaseContext>();
+	DbObjects.Initial(ctx);
+}
 
 app.Run();

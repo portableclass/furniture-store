@@ -1,12 +1,8 @@
-﻿using System;
-using FurnitureStore.Data.Models;
+﻿using FurnitureStore.Data.Models;
+namespace FurnitureStore.Data.Interfaces;
 
-namespace FurnitureStore.Data.Interfaces
+public interface IAllProducts
 {
-    public interface IAllProducts
-    {
-        IEnumerable<Product> Products { get; }
-        Product GetProduct(int productId);
-    }
+	IEnumerable<Product> Products { get; }
+	Product GetProduct(int productId);
 }
-

@@ -1,12 +1,8 @@
-﻿using System;
-using FurnitureStore.Data.Models;
+﻿using FurnitureStore.Data.Models;
+namespace FurnitureStore.Data.Interfaces;
 
-namespace FurnitureStore.Data.Interfaces
+public interface IAllWorkers
 {
-    public interface IAllWorkers
-    {
-        IEnumerable<Worker> Workers { get; }
-        Worker GetWorker(int workerId);
-    }
+	IEnumerable<Worker> Workers { get; }
+	Worker GetWorker(int workerId);
 }
-

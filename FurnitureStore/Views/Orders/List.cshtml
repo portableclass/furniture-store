@@ -1,0 +1,28 @@
+@model OrderListViewModel;
+
+@{
+	ViewData["Title"] = "Orders";
+}
+
+<h1 class="mb-3">All orders</h1>
+@{
+	<table class="table">
+		<thead>
+		<tr>
+			<td>Order Id</td>
+			<td>Creation Date</td>
+		</tr>
+		</thead>
+		<tbody>
+			@{
+				foreach (var order in Model.Orders)
+				{
+					<tr>
+						<td>@order.Id</td>
+						<td>@order.Date</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+}

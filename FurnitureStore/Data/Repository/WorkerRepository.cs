@@ -1,18 +1,15 @@
 using FurnitureStore.Data.Interfaces;
 using FurnitureStore.Data.Models;
-using Microsoft.EntityFrameworkCore;
-
 namespace FurnitureStore.Data.Repository;
 
 public class WorkerRepository : IAllWorkers
 {
-	private readonly AppDataBaseContent _appDataBaseContent;
+	private readonly AppDataBaseContext _appDataBaseContent;
+	public IEnumerable<Worker> Workers => _appDataBaseContent.Worker.ToList();
+	public Worker GetWorker(int workerId) => _appDataBaseContent.Worker.FirstOrDefault(w => w.Id == workerId);
 
-	public WorkerRepository(AppDataBaseContent content)
+	public WorkerRepository(AppDataBaseContext content)
 	{
 		_appDataBaseContent = content;
 	}
-
-	public IEnumerable<Worker> Workers => _appDataBaseContent.Worker.Include(w => w);
-	public Worker GetWorker(int workerId) => _appDataBaseContent.Worker.FirstOrDefault(w => w.Id == workerId);
 }

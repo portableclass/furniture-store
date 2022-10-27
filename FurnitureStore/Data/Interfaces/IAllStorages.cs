@@ -1,12 +1,8 @@
-﻿using System;
-using FurnitureStore.Data.Models;
+﻿using FurnitureStore.Data.Models;
+namespace FurnitureStore.Data.Interfaces;
 
-namespace FurnitureStore.Data.Interfaces
+public interface IAllStorages
 {
-    public interface IAllStorages
-    {
-        IEnumerable<Storage> Storages { get; }
-        Storage GetStorage(int storageId);
-    }
+	IEnumerable<Storage> Storages { get; }
+	Storage GetStorage(int storageId);
 }
-

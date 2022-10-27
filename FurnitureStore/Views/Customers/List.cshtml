@@ -1,0 +1,38 @@
+@model CustomerListViewModel;
+
+@{
+	ViewData["Title"] = "Customers";
+}
+
+<h1 class="mb-3">All customers</h1>
+@{
+	<table class="table">
+		<thead>
+		<tr>
+			<td>Id</td>
+			<td>Name</td>
+			<td>Patronymic</td>
+			<td>Surname</td>
+			<td>City</td>
+			<td>Street</td>
+			<td>House</td>
+		</tr>
+		</thead>
+		<tbody>
+		@{
+			foreach (var customer in Model.Customers)
+			{
+				<tr>
+					<td>@customer.Id</td>
+					<td>@customer.Name</td>
+					<td>@customer.Patronymic</td>
+					<td>@customer.Surname</td>
+					<td>@customer.City</td>
+					<td>@customer.Street</td>
+					<td>@customer.House</td>
+				</tr>
+			}
+		}
+		</tbody>
+	</table>
+}
