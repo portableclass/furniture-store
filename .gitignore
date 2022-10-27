@@ -1,4 +1,11 @@
 .vs
+.idea
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 
 # Build results
 [Dd]ebug/ 
@@ -6,6 +13,11 @@
 x64/ 
 [Bb]in/ 
 [Oo]bj/
+
+# SQL Server files
+*.mdf
+*.ldf
+*.ndf
 
 # NuGet Packages Directory
 packages/

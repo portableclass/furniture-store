@@ -5,10 +5,10 @@ charset = utf-8
 end_of_line = lf
 indent_style = tab
 indent_size = 4
-insert_final_newline = false
+insert_final_newline = true
 trim_trailing_whitespace = true
 
-# C# files
+# # C# files
 # [*.cs]
 # csharp_align_multiline_parameter = true
 # csharp_align_multiline_extends_list = true
