@@ -9,6 +9,7 @@ public class AppDataBaseContext : DbContext
 	public DbSet<Order> Order { get; set; }
 	public DbSet<Customer> Customer { get; set; }
 	public DbSet<Worker> Worker { get; set; }
+	public DbSet<Image> Image { get; set; }
 
 	public AppDataBaseContext(DbContextOptions<AppDataBaseContext> options) : base(options) {}
 }

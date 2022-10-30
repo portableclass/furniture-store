@@ -31,6 +31,19 @@ namespace FurnitureStore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Image",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Image", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Storage",
                 columns: table => new
                 {
@@ -102,14 +115,20 @@ namespace FurnitureStore.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     StorageId = table.Column<int>(type: "int", nullable: false),
+                    ImageId = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Product", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Product_Image_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Image",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Product_Order_OrderId",
                         column: x => x.OrderId,
@@ -134,6 +153,11 @@ namespace FurnitureStore.Migrations
                 column: "WorkerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Product_ImageId",
+                table: "Product",
+                column: "ImageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Product_OrderId",
                 table: "Product",
                 column: "OrderId");
@@ -148,6 +172,9 @@ namespace FurnitureStore.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Product");
+
+            migrationBuilder.DropTable(
+                name: "Image");
 
             migrationBuilder.DropTable(
                 name: "Order");

@@ -69,6 +69,22 @@ namespace FurnitureStore.Migrations
                     b.ToTable("Customer");
                 });
 
+            modelBuilder.Entity("FurnitureStore.Data.Models.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Image");
+                });
+
             modelBuilder.Entity("FurnitureStore.Data.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -110,9 +126,8 @@ namespace FurnitureStore.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ImageId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -128,6 +143,8 @@ namespace FurnitureStore.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
 
                     b.HasIndex("OrderId");
 
@@ -229,6 +246,12 @@ namespace FurnitureStore.Migrations
 
             modelBuilder.Entity("FurnitureStore.Data.Models.Product", b =>
                 {
+                    b.HasOne("FurnitureStore.Data.Models.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FurnitureStore.Data.Models.Order", null)
                         .WithMany("Products")
                         .HasForeignKey("OrderId");
@@ -238,6 +261,8 @@ namespace FurnitureStore.Migrations
                         .HasForeignKey("StorageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Image");
 
                     b.Navigation("Storage");
                 });
