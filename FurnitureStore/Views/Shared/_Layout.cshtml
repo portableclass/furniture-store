@@ -11,22 +11,12 @@
 	<p class="text-white mb-0">TradeSup</p>
 </div>
 <div class="container">
-	<header class="d-flex flex-wrap row justify-content-center py-3 mb-4 border-bottom">
-		<ul class="nav nav-pills d-flex flex-wrap align-items-center justify-content-center">
-			<li class="nav-item">
-				<a asp-controller="Products" asp-action="List" class="nav-link" aria-current="page">Products</a>
-			</li>
-			<li class="nav-item">
-				<a asp-controller="Orders" asp-action="List" class="nav-link">Orders</a>
-			</li>
-			<li class="nav-item">
-				<a asp-controller="Customers" asp-action="List" class="nav-link">Customers</a>
-			</li>
-			<li class="nav-item">
-				<a asp-controller="Home" asp-action="Index" class="nav-link">Reports</a>
-			</li>
-		</ul>
-	</header>
+	@{
+		if (User.Identity.IsAuthenticated)
+		{
+			<partial name="_HeaderNav"/>
+		}
+	}
 </div>
 <noscript>You need to enable JavaScript to run this app.</noscript>
 <div class="container">
@@ -36,20 +26,12 @@
 </div>
 <div class="container">
 	<footer class="py-3 my-4">
-		<ul class="nav justify-content-center pb-3 mb-3">
-			<li class="nav-item">
-				<a asp-controller="Products" asp-action="List" class="nav-link px-2 text-muted">Products</a>
-			</li>
-			<li class="nav-item">
-				<a asp-controller="Orders" asp-action="List" class="nav-link px-2 text-muted">Orders</a>
-			</li>
-			<li class="nav-item">
-				<a asp-controller="Customers" asp-action="List" class="nav-link px-2 text-muted">Customers</a>
-			</li>
-			<li class="nav-item">
-				<a asp-controller="Home" asp-action="Index" class="nav-link px-2 text-muted">Reports</a>
-			</li>
-		</ul>
+		@{
+			if (User.Identity.IsAuthenticated)
+			{
+				<partial name="_FooterNav"/>
+			}
+		}
 		<p class="text-center text-muted">© 2022 Furniture Store, Inc</p>
 	</footer>
 </div>

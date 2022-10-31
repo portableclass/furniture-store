@@ -2,10 +2,12 @@
 using FurnitureStore.Data.Interfaces;
 using FurnitureStore.Data.Models;
 using FurnitureStore.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FurnitureStore.Controllers;
 
+[Authorize(Policy = "User")]
 public class ProductsController : Controller
 {
 	private readonly IAllProducts _products;
@@ -36,6 +38,13 @@ public class ProductsController : Controller
 		{
 			Products = _products.Products
 		};
+
+		return View(model);
+	}
+
+	[HttpPost]
+	public IActionResult List(ProductListViewModel model)
+	{
 
 		return View(model);
 	}

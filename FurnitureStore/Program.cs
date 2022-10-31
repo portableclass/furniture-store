@@ -1,6 +1,7 @@
-using FurnitureStore.Areas.Identity.Data;
+using System.Security.Claims;
 using FurnitureStore.Data;
 using FurnitureStore.Data.Interfaces;
+using FurnitureStore.Data.Models;
 using FurnitureStore.Data.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
@@ -11,13 +12,54 @@ var builder = WebApplication.CreateBuilder(args);
 // 	.GetConnectionString("IdentityContextConnection") ?? throw new InvalidOperationException("Connection string 'IdentityContextConnection' not found.");
 
 // Add services to the container.
-builder.Services.AddDbContext<AppDataBaseContext>(options =>
-	options.UseSqlServer(
-		builder
-			.Configuration
-			.GetConnectionString("DefaultConnection")
+builder.Services.AddControllersWithViews();
+
+builder.Services
+	.AddDbContext<AppDataBaseContext>(options =>
+		options.UseSqlServer(
+			builder
+				.Configuration
+				.GetConnectionString("DefaultConnection")
 		)
-	);
+	)
+	.AddIdentity<User, Role>(config =>
+	{
+		config.Password.RequireDigit = false;
+		config.Password.RequiredLength = 1;
+		config.Password.RequireLowercase = false;
+		config.Password.RequireUppercase = false;
+		config.Password.RequireNonAlphanumeric = false;
+	})
+	.AddEntityFrameworkStores<AppDataBaseContext>();
+
+builder.Services.ConfigureApplicationCookie(config =>
+{
+	config.LoginPath = "/Account/Login";
+	config.AccessDeniedPath = "/Account/AccessDenied";
+});
+
+// builder.Services
+// 	.AddAuthentication("Cookie")
+// 	.AddCookie("Cookie", config =>
+// 	{
+// 		config.LoginPath = "/Account/Login";
+// 		config.AccessDeniedPath = "/Home/AccessDenied";
+// 	});
+builder.Services
+	.AddAuthorization(options =>
+	{
+		options.AddPolicy("Administrator", builder
+			=> { builder.RequireClaim(ClaimTypes.Role, "Administrator"); });
+		// {
+		// 	builder.RequireAssertion(x =>
+		// 		x.User.HasClaim(ClaimTypes.Role, "User") || x.User.HasClaim(ClaimTypes.Role, "Administrator"));
+		// });
+		options.AddPolicy("User", builder =>
+			// => { builder.RequireClaim(ClaimTypes.Role, "User"); });
+		{
+			builder.RequireAssertion(x => x.User.HasClaim(ClaimTypes.Role, "User") || x.User.HasClaim(ClaimTypes.Role, "Administrator"));
+		});
+	});
 
 // builder.Services
 // 	.AddDefaultIdentity<ApplicationUser>(options =>
@@ -33,6 +75,7 @@ builder.Services.AddTransient<IAllOrders, OrderRepository>();
 builder.Services.AddTransient<IAllWorkers, WorkerRepository>();
 builder.Services.AddTransient<IAllCustomers, CustomerRepository>();
 builder.Services.AddTransient<IAllImages, ImageRepository>();
+// builder.Services.AddTransient<IAllUsers, UserRepository>();
 builder.Services.AddMvc();
 
 var app = builder.Build();
@@ -46,19 +89,28 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseDeveloperExceptionPage();
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseStatusCodePages();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 // app.UseCors();
 
 app.MapControllerRoute(
 	name: "default",
-	pattern: "{controller=Home}/{action=Index}/{id?}");
+	pattern: "{controller=Account}/{action=Index}/{id?}");
 
-using (var scope = app.Services.CreateScope()) {
+// app.UseEndpoints(
+// 	endpoints =>
+// 		endpoints.MapDefaultControllerRoute()
+// );
+
+using (var scope = app.Services.CreateScope())
+{
 	var ctx = scope.ServiceProvider.GetRequiredService<AppDataBaseContext>();
-	DbObjects.Initial(ctx);
+	var userManager = scope.ServiceProvider.GetService<UserManager<User>>();
+	DbObjects.Initial(ctx, userManager);
 }
 // app.UseAuthentication();
 

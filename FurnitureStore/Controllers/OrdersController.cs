@@ -1,8 +1,10 @@
 using FurnitureStore.Data.Interfaces;
 using FurnitureStore.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace FurnitureStore.Controllers;
 
+[Authorize(Policy = "User")]
 public class OrdersController : Controller
 {
 	private readonly IAllOrders _orders;

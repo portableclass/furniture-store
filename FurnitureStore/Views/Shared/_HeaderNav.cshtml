@@ -1,0 +1,61 @@
+@* <header class="d-flex flex-wrap row justify-content-center py-3 mb-4 border-bottom"> *@
+@* 	<ul class="nav nav-pills d-flex flex-wrap align-items-center justify-content-center"> *@
+@* 		<li class="nav-item"> *@
+@* 			<a asp-controller="Products" asp-action="List" class="nav-link px-2 link-dark" aria-current="page">Products</a> *@
+@* 		</li> *@
+@* 		<li class="nav-item"> *@
+@* 			<a asp-controller="Orders" asp-action="List" class="nav-link px-2 link-dark">Orders</a> *@
+@* 		</li> *@
+@* 		<li class="nav-item"> *@
+@* 			<a asp-controller="Customers" asp-action="List" class="nav-link px-2 link-dark">Customers</a> *@
+@* 		</li> *@
+@* 		<li class="nav-item"> *@
+@* 			<a asp-controller="Home" asp-action="Index" class="nav-link px-2 link-dark">Reports</a> *@
+@* 		</li> *@
+@* 		<li class="nav-item"> *@
+@* 			<a asp-controller="Account" asp-action="Logout" class="nav-link">Logout</a> *@
+@* 		</li> *@
+@* 	</ul> *@
+@* </header> *@
+
+
+<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+	<a asp-controller="Home" asp-action="Index" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+		@* <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"> *@
+		@* 	<use xlink:href="#bootstrap"></use> *@
+		@* </svg> *@
+		<img src="~/img/assets/logo.svg" alt="" width="40" height="40">
+	</a>
+
+	<ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+		<li>
+			<a asp-controller="Products" asp-action="List" class="nav-link px-2 link-dark">Products</a>
+		</li>
+		<li>
+			<a asp-controller="Orders" asp-action="List" class="nav-link px-2 link-dark">Orders</a>
+		</li>
+		<li>
+			<a asp-controller="Customers" asp-action="List" class="nav-link px-2 link-dark">Customers</a>
+		</li>
+		<li>
+			<a asp-controller="Home" asp-action="Index" class="nav-link px-2 link-dark">Reports</a>
+		</li>
+	</ul>
+
+	<div class="col-md-3 text-end">
+		@* <button type="button" class="btn btn-outline-primary me-2">Login</button> *@
+		@* <button type="button" class="btn btn-primary">Sign-up</button> *@
+		@{
+			if (User.IsInRole("Administrator"))
+			{
+				<a asp-controller="Account" asp-action="Logout" class="btn btn-outline-primary me-2">Register new user</a>
+			}
+		}
+		@{
+			if (User.Identity.IsAuthenticated)
+			{
+				<a asp-controller="Account" asp-action="Logout" class="btn btn-primary">Logout</a>
+			}
+		}
+	</div>
+</header>
