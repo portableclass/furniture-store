@@ -1,7 +1,7 @@
 using FurnitureStore.Data.Models;
 namespace FurnitureStore.ViewModel;
 
-public class CustomerListViewModel
+public class CustomerIndexViewModel
 {
 	public IEnumerable<Customer> Customers { get; set; }
 }

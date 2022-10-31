@@ -14,17 +14,14 @@ public class ProductsController : Controller
 	private readonly IAllImages _images;
 	private readonly IAllStorages _storages;
 	private readonly ILogger<ProductsController> _logger;
-	private readonly AppDataBaseContext _ctx;
 
 	public ProductsController(
-		AppDataBaseContext ctx,
 		ILogger<ProductsController> logger,
 		IAllProducts allProducts,
 		IAllImages allImages,
 		IAllStorages allStorages
 	)
 	{
-		_ctx = ctx;
 		_products = allProducts;
 		_storages = allStorages;
 		_images = allImages;
@@ -32,9 +29,9 @@ public class ProductsController : Controller
 	}
 
 	[HttpGet]
-	public IActionResult List()
+	public IActionResult Index()
 	{
-		var model = new ProductListViewModel
+		var model = new ProductIndexViewModel
 		{
 			Products = _products.Products
 		};
@@ -43,51 +40,81 @@ public class ProductsController : Controller
 	}
 
 	[HttpPost]
-	public IActionResult List(ProductListViewModel model)
+	public IActionResult Index(ProductIndexViewModel model)
 	{
-
-		return View(model);
+		var newModel = new ProductIndexViewModel()
+		{
+			Products = _products.ProductsOrderBy(model.SortingField, model.SortingTrend)
+		};
+		return View(newModel);
 	}
 
 	[HttpGet]
 	public IActionResult Details(int? id)
 	{
 		Product? product = _products.GetProduct(id);
-		if (product != null) return View(product);
+		if (product != null)
+		{
+			ViewBag.ActionType = "Edit";
+			return View(product);
+		}
+		ViewBag.ActionType = "Create";
 		return View();
 	}
 
 	[HttpPost]
 	public async Task<IActionResult> Details(Product product)
 	{
-		// if (product.Id != 0)
-		// {
-		//
-		// }
-		// else
-		// {
-			if (!ModelState.IsValid)
-				return View(product);
+		if (product.Id != 0)
+		{
+			ViewBag.ActionType = "Edit";
+			// if (product.Image == null)
+			// {
+			// 	int id = 0;
+			// 	Product? t2 = _products.GetProduct(product.Id);
+			// 	if (t2 != null)
+			// 		product.ImageId = t2.ImageId;
+			//
+			// 	// var update = new Product()
+			// 	// {
+			// 	// 	Id = product.Id,
+			// 	// 	Name = product.Name,
+			// 	// 	Description = product.Description,
+			// 	// 	ImageId = id,
+			// 	// 	Price = product.Price,
+			// 	// 	StorageId = 1
+			// 	// };
+			// 	await _products.Update(product);
+			// 	return RedirectToAction(nameof(Complete));
+			// }
 
-			var img = new Image()
-			{
-				Name = product.Name,
-				File = product.Image.File
-			};
-			await _images.CreateImage(img);
 
-			var temp = new Product()
-			{
-				Name = product.Name,
-				Description = product.Description,
-				Image = img,
-				Price = product.Price,
-				StorageId = 1,
-			};
-
-			await _products.CreateProduct(temp);
+			await _products.Update(product);
 			return RedirectToAction(nameof(Complete));
-		// }
+		}
+
+		ViewBag.ActionType = "Create";
+		if (!ModelState.IsValid)
+			return View(product);
+
+		var img = new Image()
+		{
+			Name = product.Name,
+			File = product.Image.File
+		};
+		await _images.CreateImage(img);
+
+		var temp = new Product()
+		{
+			Name = product.Name,
+			Description = product.Description,
+			Image = img,
+			Price = product.Price,
+			StorageId = 1,
+		};
+
+		await _products.CreateProduct(temp);
+		return RedirectToAction(nameof(Complete));
 	}
 
 	public IActionResult Complete()
@@ -98,6 +125,6 @@ public class ProductsController : Controller
 	public IActionResult Delete(int id)
 	{
 		_products.DeleteProduct(id);
-		return RedirectToAction(nameof(List));
+		return RedirectToAction(nameof(Index));
 	}
 }

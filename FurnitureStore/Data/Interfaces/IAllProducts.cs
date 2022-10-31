@@ -7,4 +7,6 @@ public interface IAllProducts
 	Product? GetProduct(int? productId);
 	Task CreateProduct(Product product);
 	void DeleteProduct(int productId);
+	IEnumerable<Product> ProductsOrderBy(string sortingField, string sortingTrend);
+	Task Update(Product product);
 }

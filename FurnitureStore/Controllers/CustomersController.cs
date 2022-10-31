@@ -16,9 +16,9 @@ public class CustomersController : Controller
 		_logger = logger;
 	}
 
-	public IActionResult List()
+	public IActionResult Index()
 	{
-		var model = new CustomerListViewModel()
+		var model = new CustomerIndexViewModel()
 		{
 			Customers = _customers.Customers
 		};

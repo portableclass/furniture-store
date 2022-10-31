@@ -16,9 +16,9 @@ public class OrdersController : Controller
 		_logger = logger;
 	}
 
-	public IActionResult List()
+	public IActionResult Index()
 	{
-		var model = new OrderListViewModel()
+		var model = new OrderIndexViewModel()
 		{
 			Orders = _orders.Orders
 		};

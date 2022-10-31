@@ -16,11 +16,22 @@
 		<input class="form-control" asp-for="Description">
 		<span asp-validation-for="Description" class="text-danger"></span>
 	</div>
-	<div class="mb-3">
-		<label asp-for="Image.File" class="form-label"></label>
-		<input class="form-control" asp-for="Image.File" accept="image/*">
-		<span asp-validation-for="Image.File" class="text-danger"></span>
-	</div>
+	@{
+		if (ViewBag.ActionType == "Create")
+		{
+			<div class="mb-3">
+				<label asp-for="Image.File" class="form-label"></label>
+				<input class="form-control" asp-for="Image.File" accept="image/*">
+				<span asp-validation-for="Image.File" class="text-danger"></span>
+			</div>
+		}
+		else
+		{
+			<input hidden asp-for="Id"/>
+			<input hidden asp-for="StorageId"/>
+			<input hidden asp-for="ImageId"/>
+		}
+	}
 	<div class="mb-3">
 		<label asp-for="Price" class="form-label"></label>
 		<input class="form-control" asp-for="Price">
@@ -28,5 +39,5 @@
 	</div>
 
 	<input type="submit" class="btn btn-primary" value="Save"/>
-	<a class="btn btn-danger ms-3" asp-controller="Products" asp-action="List">Cancel</a>
+	<a class="btn btn-danger ms-3" asp-controller="Products" asp-action="Index">Cancel</a>
 </form>

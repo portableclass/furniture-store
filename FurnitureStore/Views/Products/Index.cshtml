@@ -1,4 +1,4 @@
-﻿@model ProductListViewModel
+﻿@model ProductIndexViewModel
 
 @{
 	ViewData["Title"] = "Products";
@@ -10,13 +10,12 @@
 		<a class="d-flex btn btn-warning ms-4 align-items-center" asp-conroller="Products" asp-action="Details">Add product</a>
 	</div>
 	<div class="d-flex flex-wrap">
-		<form class="d-flex ms-4 w-auto" method="post" asp-controller="Products" asp-action="List">
+		<form class="d-flex ms-4 w-auto" method="post" asp-controller="Products" asp-action="Index">
 			<select class="form-select w-auto" aria-label="Default select example" asp-for="SortingField">
 				<option selected>Sorting field</option>
 				<option value="1">Name</option>
 				<option value="2">Price</option>
 				<option value="3">Description</option>
-				<option value="4">Storage</option>
 			</select>
 			<select class="form-select w-auto ms-4" aria-label="Default select example" asp-for="SortingTrend">
 				<option selected>Order by...</option>
@@ -53,10 +52,15 @@
 							<p class="card-text">Storage: @product.Storage.Name</p>
 							<p class="card-text">@product.Description</p>
 							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<a type="button" class="btn btn-sm btn-outline-primary" asp-controller="Products" asp-action="Details" asp-route-id="@product.Id">Edit</a>
-									<a type="button" class="btn btn-sm btn-outline-danger" asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id">Delete</a>
-								</div>
+								@{
+									if (User.IsInRole("Administrator"))
+									{
+										<div class="btn-group">
+											<a type="button" class="btn btn-sm btn-outline-primary" asp-controller="Products" asp-action="Details" asp-route-id="@product.Id">Edit</a>
+											<a type="button" class="btn btn-sm btn-outline-danger" asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id">Delete</a>
+										</div>
+									}
+								}
 								<small class="text-muted fs-5">@product.Price.ToString("c")</small>
 							</div>
 						</div>

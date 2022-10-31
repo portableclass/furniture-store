@@ -1,7 +1,7 @@
 using FurnitureStore.Data.Models;
 namespace FurnitureStore.ViewModel;
 
-public class OrderListViewModel
+public class OrderIndexViewModel
 {
 	public IEnumerable<Order> Orders { get; set; }
 }

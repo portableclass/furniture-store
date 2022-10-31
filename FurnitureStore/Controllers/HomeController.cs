@@ -16,13 +16,5 @@ public class HomeController : Controller
 		_logger = logger;
 	}
 
-	public IActionResult Index()
-	{
-		// ViewBag.Name = User.Identity.Name;
-		// ViewBag.IsAuthenticated = User.Identity.IsAuthenticated;
-		// ViewBag.Role = User.IsInRole("Administrator");
-		return View();
-	}
-
-	// public IActionResult Logout() => Redirect("/Account/Logout");
+	public IActionResult Index() => View();
 }
