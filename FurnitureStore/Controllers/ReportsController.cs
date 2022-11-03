@@ -1,17 +1,25 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
+using System.Text;
+using System.Xml.Linq;
+using ClosedXML.Excel;
+using FurnitureStore.Data;
+using FurnitureStore.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using FurnitureStore.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureStore.Controllers;
 
 [Authorize(Policy = "User")]
-public class HomeController : Controller
+public class ReportsController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    private readonly AppDbContext _context;
+    private readonly ILogger<ReportsController> _logger;
+    
+    public ReportsController(AppDbContext context, ILogger<ReportsController> logger)
     {
+        _context = context;
         _logger = logger;
     }
 
@@ -23,4 +31,3 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
-

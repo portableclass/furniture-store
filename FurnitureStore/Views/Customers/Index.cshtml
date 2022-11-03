@@ -1,38 +1,83 @@
-@model CustomerIndexViewModel;
+@model IEnumerable<FurnitureStore.Data.Models.Customer>
 
 @{
-	ViewData["Title"] = "Customers";
+    ViewData["Title"] = "Index";
 }
 
-<h1 class="mb-3">All customers</h1>
-@{
-	<table class="table">
-		<thead>
-		<tr>
-			<td>Id</td>
-			<td>Name</td>
-			<td>Patronymic</td>
-			<td>Surname</td>
-			<td>City</td>
-			<td>Street</td>
-			<td>House</td>
-		</tr>
-		</thead>
-		<tbody>
-		@{
-			foreach (var customer in Model.Customers)
-			{
-				<tr>
-					<td>@customer.Id</td>
-					<td>@customer.Name</td>
-					<td>@customer.Patronymic</td>
-					<td>@customer.Surname</td>
-					<td>@customer.City</td>
-					<td>@customer.Street</td>
-					<td>@customer.House</td>
-				</tr>
-			}
-		}
-		</tbody>
-	</table>
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Patronymic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Surname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Street)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.House)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostalCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Discount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Patronymic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Street)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.House)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostalCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discount)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
 }
+    </tbody>
+</table>

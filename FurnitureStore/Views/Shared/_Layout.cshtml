@@ -1,41 +1,44 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>
-	<title>@ViewData["Title"]</title>
-	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    @* <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> *@
 </head>
 <body>
 <div class="logo d-flex flex-wrap align-items-center justify-content-center border-bottom bg-primary py-3">
-	<p class="text-white mb-0">TradeSup</p>
+    <p class="text-white mb-0">TradeSup</p>
 </div>
 <div class="container">
-	@{
-		if (User.Identity.IsAuthenticated)
-		{
-			<partial name="_HeaderNav"/>
-		}
-	}
+    @{
+        if (User.Identity.IsAuthenticated)
+        {
+            <partial name="_HeaderNav"/>
+        }
+    }
 </div>
 <noscript>You need to enable JavaScript to run this app.</noscript>
 <div class="container">
-	<main role="main" class="pb-3 border-bottom">
-		@RenderBody()
-	</main>
+    <main role="main" class="pb-3 border-bottom">
+        @RenderBody()
+    </main>
 </div>
 <div class="container">
-	<footer class="py-3 my-4">
-		@{
-			if (User.Identity.IsAuthenticated)
-			{
-				<partial name="_FooterNav"/>
-			}
-		}
-		<p class="text-center text-muted">© 2022 TradeSup, Inc</p>
-	</footer>
+    <footer class="py-3 my-4">
+        @{
+            if (User.Identity.IsAuthenticated)
+            {
+                <partial name="_FooterNav"/>
+            }
+        }
+        <p class="text-center text-muted">© 2022 TradeSup, Inc</p>
+    </footer>
 </div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/index.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

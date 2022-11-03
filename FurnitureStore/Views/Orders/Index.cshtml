@@ -1,28 +1,78 @@
-@model OrderIndexViewModel;
+@model FurnitureStore.ViewModel.OrderIndexViewModel
 
 @{
-	ViewData["Title"] = "Orders";
+    ViewData["Title"] = "Orders";
 }
 
-<h1 class="mb-3">All orders</h1>
-@{
-	<table class="table">
-		<thead>
-		<tr>
-			<td>Order Id</td>
-			<td>Creation Date</td>
-		</tr>
-		</thead>
-		<tbody>
-			@{
-				foreach (var order in Model.Orders)
-				{
-					<tr>
-						<td>@order.Id</td>
-						<td>@order.Date</td>
-					</tr>
-				}
-			}
-		</tbody>
-	</table>
+<div class="container d-flex align-center mb-3 justify-content-between">
+    <div class="d-flex flex-wrap">
+        <h1>All orders</h1>
+        <a class="d-flex btn btn-warning ms-4 align-items-center" asp-conroller="Orders" asp-action="Create">Add order</a>
+    </div>
+    <div class="d-flex flex-wrap">
+        <form class="d-flex ms-4 w-auto" method="post" asp-controller="Orders" asp-action="Index">
+            @* <select class="form-select w-auto" aria-label="Default select example" asp-for="DateFrom"> *@
+            @*     <option selected>Sorting field</option> *@
+            @*     <option value="1">Name</option> *@
+            @*     <option value="2">Price</option> *@
+            @*     <option value="3">Description</option> *@
+            @* </select> *@
+            @* <select class="form-select w-auto ms-4" aria-label="Default select example" asp-for="DateTo"> *@
+            @*     <option selected>Order by...</option> *@
+            @*     <option value="1">ASC</option> *@
+            @*     <option value="2">DESC</option> *@
+            @* </select> *@
+            <p class="d-flex align-items-center m-0 mb-0">Date from</p>
+            <input class="form-control w-auto ms-4" asp-for="DateFrom">
+            <p class="d-flex align-items-center m-0 mb-0 ms-4">Date to</p>
+            <input class="form-control w-auto ms-4" asp-for="DateTo">
+            <input type="submit" class="d-flex btn btn-warning ms-4 align-items-center" value="Select"/>
+            @* <a class="d-flex btn btn-warning ms-4 align-items-center" type="submit" asp-controller="Products" asp-action="List">Go sort</a> *@
+        </form>
+    </div>
+</div>
+@* <p> *@
+@*     <a asp-action="Create">Create New</a> *@
+@* </p> *@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @* @Html.DisplayNameFor(model => model.Date) *@
+                Date
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.Customer) *@
+                CustomerId
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.WokerId) *@
+                WorkerId
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Orders) {
+        <tr>
+            <td>
+                @* @Html.DisplayFor(modelItem => item.Date) *@
+                @item.Date
+            </td>
+            <td>
+                @* @Html.DisplayFor(modelItem => item.Customer.Id) *@
+                @item.Customer.Id
+            </td>
+            <td>
+                @* @Html.DisplayFor(modelItem => item.WokerId) *@
+                @item.Worker.Id
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
 }
+    </tbody>
+</table>

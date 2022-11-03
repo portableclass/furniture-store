@@ -5,6 +5,6 @@ namespace FurnitureStore.Data.Models;
 
 public class User : IdentityUser<Guid>
 {
-	public int WorkerId { get; set; }
-	public virtual Worker? Worker { get; set; }
+    public int WorkerId { get; set; }
+    public virtual Worker Worker { get; set; }
 }
