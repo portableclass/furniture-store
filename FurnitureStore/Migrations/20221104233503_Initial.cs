@@ -154,7 +154,6 @@ namespace FurnitureStore.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
-                    WokerId = table.Column<int>(type: "int", nullable: false),
                     WorkerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

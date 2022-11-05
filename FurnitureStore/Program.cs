@@ -31,7 +31,7 @@ builder.Services
 // Configure cookies
 builder.Services.ConfigureApplicationCookie(config =>
 {
-    config.LoginPath = "/Account/Index";
+    config.LoginPath = "/Account/Login";
     config.AccessDeniedPath = "/Account/AccessDenied";
 });
 

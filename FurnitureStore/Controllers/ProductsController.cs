@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -200,7 +201,7 @@ namespace FurnitureStore.Controllers
             }
 
             // ViewData["ImageId"] = new SelectList(_context.Image, "Id", "Id", product.ImageId);
-            // ViewData["StorageId"] = new SelectList(_context.Storage, "Id", "Id", product.StorageId);
+            // ViewData["StorageName"] = new SelectList(_context.Storage, "Name", "Name", product.Storage.Name);
             return View(product);
         }
 
@@ -312,6 +313,12 @@ namespace FurnitureStore.Controllers
             var appDbContext = _context.Product
                 .Include(p => p.Image)
                 .Include(p => p.Storage);
+
+            // object bobik = new dog();
+            // foreach(FieldInfo field in bobik.GetType().GetFields())
+            // {
+	           //  Console.WriteLine("{0} {1} {2}", field.FieldType, field.Name, field.GetValue(bobik));
+            // }
             switch (model.ExportType)
             {
                 case "1":
@@ -320,12 +327,20 @@ namespace FurnitureStore.Controllers
                     builder.AppendLine("Id,Name,Description,Price,StorageId,ImageId");
                     foreach (var product in appDbContext)
                     {
-                        builder.AppendLine($"{product.Id}," +
-                                           $"{product.Name}," +
-                                           $"{product.Description}," +
-                                           $"{product.Price}," +
-                                           $"{product.StorageId}," +
-                                           $"{product.ImageId}");
+	                    // string line = String.Empty;
+	                    // foreach (var field in product.GetType().GetFields())
+	                    // {
+		                   //  line += $"{field.GetValue(product)},";
+		                   //  int f = 1;
+	                    // }
+
+	                    // builder.AppendLine(line);
+	                    builder.AppendLine($"{product.Id}," +
+	                                       $"{product.Name}," +
+	                                       $"{product.Description}," +
+	                                       $"{product.Price}," +
+	                                       $"{product.StorageId}," +
+	                                       $"{product.ImageId}");
                     }
 
                     return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", "products.csv");
@@ -389,6 +404,12 @@ namespace FurnitureStore.Controllers
         private bool ProductExists(int id)
         {
             return (_context.Product?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+	        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

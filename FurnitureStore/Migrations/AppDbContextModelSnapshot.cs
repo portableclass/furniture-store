@@ -99,9 +99,6 @@ namespace FurnitureStore.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("WokerId")
-                        .HasColumnType("int");
-
                     b.Property<int>("WorkerId")
                         .HasColumnType("int");
 

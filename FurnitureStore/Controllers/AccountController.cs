@@ -1,3 +1,4 @@
+using FurnitureStore.Data;
 using FurnitureStore.Data.Models;
 using FurnitureStore.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -11,28 +12,50 @@ public class AccountController : Controller
 {
 	private readonly ILogger<AccountController> _logger;
 	private readonly UserManager<User> _userManager;
+	private readonly RoleManager<Role> _roleManager;
 	private readonly SignInManager<User> _signInManager;
+	private readonly AppDbContext _context;
+	private Task<User> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
 	public AccountController(
 		ILogger<AccountController> logger,
 		UserManager<User> userManager,
-		SignInManager<User> signInManager)
+		SignInManager<User> signInManager,
+		AppDbContext context,
+		RoleManager<Role> roleManager
+		)
 	{
 		_logger = logger;
 		_userManager = userManager;
+		_roleManager = roleManager;
 		_signInManager = signInManager;
+		_context = context;
+	}
+
+	[HttpGet]
+	public async Task<IActionResult> Index()
+	{
+		var user = await GetCurrentUserAsync();
+		var worker = await _context.Worker.FindAsync(user.WorkerId);
+		var model = new AccountIndexViewModel()
+		{
+			Worker = worker
+		};
+
+		return View(model);
 	}
 
 	[HttpGet]
 	[AllowAnonymous]
-	public IActionResult Index() => View();
+	public IActionResult Login() => View(new AccountIndexViewModel());
 
 	[HttpPost]
 	[AllowAnonymous]
-	public async Task<IActionResult> Index(AccountIndexViewModel model)
+	public async Task<IActionResult> Login(AccountIndexViewModel model)
 	{
 		if (!ModelState.IsValid)
 		{
+			model.IsValid = "is-invalid";
 			return View(model);
 		}
 
@@ -40,6 +63,7 @@ public class AccountController : Controller
 		if (check == null)
 		{
 			ModelState.AddModelError("", "User not found");
+			model.IsValid = "is-invalid";
 			return View(model);
 		}
 
@@ -48,6 +72,7 @@ public class AccountController : Controller
 			return Redirect("/Home/Index");
 
 		ModelState.AddModelError("", "Password not correct");
+		model.IsValid = "is-invalid";
 		return View(model);
 	}
 
@@ -55,7 +80,7 @@ public class AccountController : Controller
 	public async Task<IActionResult> Logout()
 	{
 		await _signInManager.SignOutAsync();
-		return Redirect("/Account/Index");
+		return Redirect("/Account/Login");
 	}
 
 	[HttpGet]

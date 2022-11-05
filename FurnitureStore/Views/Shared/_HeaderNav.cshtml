@@ -1,9 +1,9 @@
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-	<a asp-controller="Home" asp-action="Index" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+	<a asp-controller="Home" asp-action="Index" class="d-flex align-items-center col-md-auto mb-2 me-2 mb-md-0 text-dark text-decoration-none">
 		<img src="~/img/assets/logo.svg" alt="" width="40" height="40">
 	</a>
 
-	<ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+	<ul class="nav mb-2 justify-content-center">
 		<li>
 			<a asp-controller="Products" asp-action="Index" class="nav-link px-2 link-dark">Products</a>
 		</li>
@@ -18,7 +18,7 @@
 		</li>
 	</ul>
 
-	<div class="col-md-3 text-end">
+	<div class="col text-end">
 		@{
 			if (User.IsInRole("Administrator"))
 			{
@@ -28,6 +28,7 @@
 		@{
 			if (User.Identity.IsAuthenticated)
 			{
+				<a asp-controller="Account" asp-action="Index" class="btn btn-primary me-2">Account</a>
 				<a asp-controller="Account" asp-action="Logout" class="btn btn-primary">Logout</a>
 			}
 		}

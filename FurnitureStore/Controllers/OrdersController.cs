@@ -35,13 +35,15 @@ namespace FurnitureStore.Controllers
             };
             return View(model);
         }
-        
+
         [HttpPost]
         public IActionResult Index(OrderIndexViewModel model)
         {
             var appDbContext = _context.Order
-                .Where(o => model.DateFrom <= o.Date && o.Date <= model.DateTo);
-            
+                .Where(o => model.DateFrom <= o.Date && o.Date <= model.DateTo)
+                .Include(o => o.Worker)
+	            .Include(o => o.Customer);
+
             var newModel = new OrderIndexViewModel()
             {
                 Orders = appDbContext,
@@ -82,7 +84,7 @@ namespace FurnitureStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Date,CustomerId,WokerId")] Order order)
+        public async Task<IActionResult> Create([Bind("Id,Date,CustomerId,WorkerId")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -116,7 +118,7 @@ namespace FurnitureStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Date,CustomerId,WokerId")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Date,CustomerId,WorkerId")] Order order)
         {
             if (id != order.Id)
             {
@@ -180,7 +182,7 @@ namespace FurnitureStore.Controllers
             {
                 _context.Order.Remove(order);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
