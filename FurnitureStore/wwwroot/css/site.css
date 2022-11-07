@@ -3,3 +3,23 @@
 	font-size: 32px;
 	line-height: 38px;
 }
+
+.app-tbody {
+	background: #c2c5ce;
+}
+
+.app-tbody tr {
+	background: rgba(255, 255, 255, 0.8);
+}
+
+.app-tbody tr:hover {
+	background: rgba(255, 255, 255, 0.5);
+}
+
+.app-tbody tr:nth-child(2n) {
+	background: white;
+}
+
+.app-tbody tr:nth-child(2n):hover {
+	background: rgba(255, 255, 255, 0.5);
+}

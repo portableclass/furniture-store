@@ -5,6 +5,8 @@ VisualStudioVersion = 25.0.1703.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FurnitureStore", "FurnitureStore\FurnitureStore.csproj", "{6FACE78D-3717-4ECF-80E9-15E2F28E34F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FurnitureStore.Tests", "FurnitureStore.Tests\FurnitureStore.Tests.csproj", "{2029D166-2EA6-4BF0-AD0E-484821353A3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6FACE78D-3717-4ECF-80E9-15E2F28E34F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FACE78D-3717-4ECF-80E9-15E2F28E34F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FACE78D-3717-4ECF-80E9-15E2F28E34F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2029D166-2EA6-4BF0-AD0E-484821353A3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2029D166-2EA6-4BF0-AD0E-484821353A3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2029D166-2EA6-4BF0-AD0E-484821353A3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2029D166-2EA6-4BF0-AD0E-484821353A3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

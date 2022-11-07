@@ -1,0 +1,10 @@
+global using Xunit;
+global using FurnitureStore.Controllers;
+global using FurnitureStore.Data;
+global using FurnitureStore.Data.Models;
+global using FurnitureStore.ViewModels;
+global using Microsoft.AspNetCore.Hosting;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Logging;
+global using Moq;

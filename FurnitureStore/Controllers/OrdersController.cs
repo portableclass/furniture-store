@@ -23,16 +23,17 @@ namespace FurnitureStore.Controllers
         }
 
         // GET: Orders
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var appDbContext = _context.Order
                 .Include(o => o.Worker)
                 .Include(o => o.Customer);
-            // return View(await appDbContext.ToListAsync());
+
             var model = new OrderIndexViewModel()
             {
                 Orders = appDbContext
             };
+
             return View(model);
         }
 

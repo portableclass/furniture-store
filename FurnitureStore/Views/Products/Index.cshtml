@@ -4,60 +4,6 @@
     ViewData["Title"] = "Products";
 }
 
-@* <h1>Index</h1> *@
-@* *@
-@* <p> *@
-@*     <a asp-action="Create">Create New</a> *@
-@* </p> *@
-@* <table class="table"> *@
-@*     <thead> *@
-@*         <tr> *@
-@*             <th> *@
-@*                 @Html.DisplayNameFor(model => model.Name) *@
-@*             </th> *@
-@*             <th> *@
-@*                 @Html.DisplayNameFor(model => model.Description) *@
-@*             </th> *@
-@*             <th> *@
-@*                 @Html.DisplayNameFor(model => model.Price) *@
-@*             </th> *@
-@*             <th> *@
-@*                 @Html.DisplayNameFor(model => model.Storage) *@
-@*             </th> *@
-@*             <th> *@
-@*                 @Html.DisplayNameFor(model => model.Image) *@
-@*             </th> *@
-@*             <th></th> *@
-@*         </tr> *@
-@*     </thead> *@
-@*     <tbody> *@
-@* @foreach (var item in Model) { *@
-@*         <tr> *@
-@*             <td> *@
-@*                 @Html.DisplayFor(modelItem => item.Name) *@
-@*             </td> *@
-@*             <td> *@
-@*                 @Html.DisplayFor(modelItem => item.Description) *@
-@*             </td> *@
-@*             <td> *@
-@*                 @Html.DisplayFor(modelItem => item.Price) *@
-@*             </td> *@
-@*             <td> *@
-@*                 @Html.DisplayFor(modelItem => item.Storage.Id) *@
-@*             </td> *@
-@*             <td> *@
-@*                 @Html.DisplayFor(modelItem => item.Image.Id) *@
-@*             </td> *@
-@*             <td> *@
-@*                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> | *@
-@*                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> | *@
-@*                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
-@*             </td> *@
-@*         </tr> *@
-@* } *@
-@*     </tbody> *@
-@* </table> *@
-
 <div class="container d-flex align-center mb-3 justify-content-between">
 	<div class="d-flex flex-wrap">
 		<h1>All products</h1>
@@ -73,8 +19,8 @@
 			</select>
 			<select class="form-select w-auto ms-4" aria-label="Default select example" asp-for="SortingTrend">
 				<option selected>Order by...</option>
-				<option value="1">ASC</option>
-				<option value="2">DESC</option>
+				<option value="ASC">ASC</option>
+				<option value="DESC">DESC</option>
 			</select>
 			<input type="submit" class="d-flex btn btn-warning ms-4 align-items-center" value="Go sort"/>
 			@* <a class="d-flex btn btn-warning ms-4 align-items-center" type="submit" asp-controller="Products" asp-action="List">Go sort</a> *@
@@ -126,7 +72,7 @@
 	</div>
 }
 
-<div class="container d-flex align-center mb-3 justify-content-between">
+<div class="container d-flex align-center py-3 justify-content-between">
     <div class="d-flex flex-wrap">
         <h1>Export data</h1>
     </div>
@@ -134,7 +80,7 @@
         <form class="d-flex ms-4 w-auto" method="post" asp-controller="Products" asp-action="ExportData">
             <select class="form-select w-auto" aria-label="Default select example" asp-for="ExportType">
                 <option selected>Choose type</option>
-                <option value="1">Excel .csv</option>
+                <option value="csv">Excel .csv</option>
                 <option value="2">Excel .xlsx</option>
                 <option value="3">XML Document .xml</option>
             </select>

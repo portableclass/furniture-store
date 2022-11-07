@@ -110,9 +110,7 @@ public class DbObjects
                 {
                     Name = "name1",
                     Description = "desc1",
-					// Image = new Image() {
-					// 	Name = "img1.png"},
-					Image = Images["/img/products/img1.png"],
+                    Image = Images["/img/products/img1.png"],
                     Price = 100,
                     Storage = Storages["Залесный"]
                 },
@@ -120,9 +118,7 @@ public class DbObjects
                 {
                     Name = "name2",
                     Description = "desc2",
-					// Image = new Image() {
-					// 	Name = "img2.png"},
-					Image = Images["/img/products/img2.png"],
+                    Image = Images["/img/products/img2.png"],
                     Price = 200,
                     Storage = Storages["Корегный"]
                 },
@@ -130,9 +126,7 @@ public class DbObjects
                 {
                     Name = "name3",
                     Description = "desc3",
-					// Image = new Image() {
-					// 	Name = "img3.png"},
-					Image = Images["/img/products/img3.png"],
+                    Image = Images["/img/products/img3.png"],
                     Price = 300,
                     Storage = Storages["Дальный"]
                 },
@@ -140,9 +134,7 @@ public class DbObjects
                 {
                     Name = "name4",
                     Description = "desc4",
-					// Image = new Image() {
-					// 	Name = "img4.png"},
-					Image = Images["/img/products/img4.png"],
+                    Image = Images["/img/products/img4.png"],
                     Price = 400,
                     Storage = Storages["Перечный"]
                 },
@@ -150,9 +142,7 @@ public class DbObjects
                 {
                     Name = "name5",
                     Description = "desc5",
-					// Image = new Image() {
-					// 	Name = "img5.png"},
-					Image = Images["/img/products/img5.png"],
+                    Image = Images["/img/products/img5.png"],
                     Price = 500,
                     Storage = Storages["Юный"]
                 },
@@ -160,9 +150,7 @@ public class DbObjects
                 {
                     Name = "name6",
                     Description = "desc6",
-					// Image = new Image() {
-					// 	Name = "img6.png"},
-					Image = Images["/img/products/img6.png"],
+                    Image = Images["/img/products/img6.png"],
                     Price = 600,
                     Storage = Storages["Картонный"]
                 },
@@ -170,9 +158,7 @@ public class DbObjects
                 {
                     Name = "name7",
                     Description = "desc7",
-					// Image = new Image() {
-					// 	Name = "img7.png"},
-					Image = Images["/img/products/img7.png"],
+                    Image = Images["/img/products/img7.png"],
                     Price = 700,
                     Storage = Storages["Картонный"]
                 },
@@ -180,9 +166,7 @@ public class DbObjects
                 {
                     Name = "name8",
                     Description = "desc8",
-					// Image = new Image() {
-					// 	Name = "img8.png"},
-					Image = Images["/img/products/img8.png"],
+                    Image = Images["/img/products/img8.png"],
                     Price = 800,
                     Storage = Storages["Перерабатывающий"]
                 },
@@ -190,9 +174,7 @@ public class DbObjects
                 {
                     Name = "name9",
                     Description = "desc9",
-					// Image = new Image() {
-					// 	Name = "img9.png"},
-					Image = Images["/img/products/img9.png"],
+                    Image = Images["/img/products/img9.png"],
                     Price = 900,
                     Storage = Storages["Перерабатывающий"]
                 },
@@ -200,10 +182,7 @@ public class DbObjects
                 {
                     Name = "name10",
                     Description = "desc10",
-					// Image = new Image() {
-					// 	Name = "img10.png"
-					// },
-					Image = Images["/img/products/img10.png"],
+                    Image = Images["/img/products/img10.png"],
                     Price = 1000,
                     Storage = Storages["Перерабатывающий"]
                 }
