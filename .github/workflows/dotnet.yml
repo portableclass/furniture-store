@@ -21,12 +21,18 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
+
+    # Build run
     - name: Build
       run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
+    # Test run
     - name: Test
-      run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
-    - name: Publish coverage report to coveralls.io   
-      uses: coverallsapp/github-action@master   
+      run: |
+        cd ./FurnitureStore.Tests/
+        dotnet test /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+    # Coveralls.io
+    - name: Publish coverage report to coveralls.io
+      uses: coverallsapp/github-action@master
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }} 
-        path-to-lcov: ./FurnitureStore/FurnitureStore.Tests/TestResults/coverage.info
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: ./FurnitureStore.Tests/TestResults/coverage.info 
