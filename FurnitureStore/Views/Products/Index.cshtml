@@ -1,7 +1,7 @@
 @model ProductIndexViewModel
 
 @{
-    ViewData["Title"] = "Products";
+	ViewData["Title"] = "Products";
 }
 
 <div class="container d-flex align-center mb-3 justify-content-between">
@@ -13,9 +13,9 @@
 		<form class="d-flex ms-4 w-auto" method="post" asp-controller="Products" asp-action="Index">
 			<select class="form-select w-auto" aria-label="Default select example" asp-for="SortingField">
 				<option selected>Sorting field</option>
-				<option value="1">Name</option>
-				<option value="2">Price</option>
-				<option value="3">Description</option>
+				<option value="Name">Name</option>
+				<option value="Price">Price</option>
+				<option value="Description">Description</option>
 			</select>
 			<select class="form-select w-auto ms-4" aria-label="Default select example" asp-for="SortingTrend">
 				<option selected>Order by...</option>
@@ -23,7 +23,6 @@
 				<option value="DESC">DESC</option>
 			</select>
 			<input type="submit" class="d-flex btn btn-warning ms-4 align-items-center" value="Go sort"/>
-			@* <a class="d-flex btn btn-warning ms-4 align-items-center" type="submit" asp-controller="Products" asp-action="List">Go sort</a> *@
 		</form>
 	</div>
 </div>
@@ -34,8 +33,6 @@
 			{
 				<div class="col">
 					<div class="card shadow-sm">
-						@* @await Html.PartialAsync("Image", ) *@
-						@* @product. *@
 						<img
 							src="@product.Image.Name"
 							class="bd-placeholder-img card-img-top shadow-sm"
@@ -45,12 +42,15 @@
 							preserveAspectRatio="xMidYMid slice"
 							focusable="false"
 							alt="image"/>
-						@* <img src="" class="bd-placeholder-img card-img-top shadow-sm" width="100%" height="225" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" alt="image"/> *@
 
 						<div class="card-body">
 							<p class="fs-2">@product.Name</p>
 							<p class="card-text">Storage: @product.Storage.Name</p>
-							@* <p class="card-text">Amount at storage: @product.Storage.Products.Select(x=>x.StorageId == product.StorageId).ToList().Count</p> *@
+							<p class="card-text">
+								Amount at storage:
+								@product.Storage.Products.Count()
+								@* @product.Storage.Products.Where(x => x.StorageId == product.StorageId).ToList().Count() *@
+							</p>
 							<p class="card-text">@product.Description</p>
 							<div class="d-flex justify-content-between align-items-center">
 								@{
@@ -73,18 +73,18 @@
 }
 
 <div class="container d-flex align-center py-3 justify-content-between">
-    <div class="d-flex flex-wrap">
-        <h1>Export data</h1>
-    </div>
-    <div class="d-flex flex-wrap">
-        <form class="d-flex ms-4 w-auto" method="post" asp-controller="Products" asp-action="ExportData">
-            <select class="form-select w-auto" aria-label="Default select example" asp-for="ExportType">
-                <option selected>Choose type</option>
-                <option value="csv">Excel .csv</option>
-                <option value="2">Excel .xlsx</option>
-                <option value="3">XML Document .xml</option>
-            </select>
-            <input type="submit" class="d-flex btn btn-warning ms-4 align-items-center" value="Export"/>
-        </form>
-    </div>
+	<div class="d-flex flex-wrap">
+		<h1>Export data</h1>
+	</div>
+	<div class="d-flex flex-wrap">
+		<form class="d-flex ms-4 w-auto" method="post" asp-controller="Products" asp-action="ExportData">
+			<select class="form-select w-auto" aria-label="Default select example" asp-for="ExportType">
+				<option selected>Choose type</option>
+				<option value="csv">Excel .csv</option>
+				<option value="2">Excel .xlsx</option>
+				<option value="3">XML Document .xml</option>
+			</select>
+			<input type="submit" class="d-flex btn btn-warning ms-4 align-items-center" value="Export"/>
+		</form>
+	</div>
 </div>

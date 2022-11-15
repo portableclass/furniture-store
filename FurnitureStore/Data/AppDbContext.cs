@@ -11,7 +11,6 @@ public class AppDbContext : IdentityDbContext<User, Role, Guid>
     public DbSet<Customer> Customer { get; set; }
     public DbSet<Worker> Worker { get; set; }
     public DbSet<Image> Image { get; set; }
-    // public DbSet<User> User { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 }

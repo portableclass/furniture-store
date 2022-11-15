@@ -1,56 +1,3 @@
-@* @model FurnitureStore.Data.Models.Product *@
-@* *@
-@* @{ *@
-@*     ViewData["Title"] = "Edit"; *@
-@* } *@
-@* *@
-@* <h1>Edit</h1> *@
-@* *@
-@* <h4>Product</h4> *@
-@* <hr /> *@
-@* <div class="row"> *@
-@*     <div class="col-md-4"> *@
-@*         <form asp-action="Edit"> *@
-@*             <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
-@*             <input type="hidden" asp-for="Id" /> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="Name" class="control-label"></label> *@
-@*                 <input asp-for="Name" class="form-control" /> *@
-@*                 <span asp-validation-for="Name" class="text-danger"></span> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="Description" class="control-label"></label> *@
-@*                 <input asp-for="Description" class="form-control" /> *@
-@*                 <span asp-validation-for="Description" class="text-danger"></span> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="Price" class="control-label"></label> *@
-@*                 <input asp-for="Price" class="form-control" /> *@
-@*                 <span asp-validation-for="Price" class="text-danger"></span> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="StorageId" class="control-label"></label> *@
-@*                 <select asp-for="StorageId" class="form-control" asp-items="ViewBag.StorageId"></select> *@
-@*                 <span asp-validation-for="StorageId" class="text-danger"></span> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <label asp-for="ImageId" class="control-label"></label> *@
-@*                 <select asp-for="ImageId" class="form-control" asp-items="ViewBag.ImageId"></select> *@
-@*                 <span asp-validation-for="ImageId" class="text-danger"></span> *@
-@*             </div> *@
-@*             <div class="form-group"> *@
-@*                 <input type="submit" value="Save" class="btn btn-primary" /> *@
-@*             </div> *@
-@*         </form> *@
-@*     </div> *@
-@* </div> *@
-@* *@
-@* <div> *@
-@*     <a asp-action="Index">Back to List</a> *@
-@* </div> *@
-@* *@
-
-
 @model Product
 
 @{
@@ -59,6 +6,8 @@
 
 <h1>Edit product</h1>
 <form asp-action="Edit" method="post" enctype="multipart/form-data">
+	<input hidden asp-for="Id"/>
+	<input hidden asp-for="ImageId"/>
 	<div asp-validation-summary="All" class="text-danger"></div>
 	<div class="mb-3">
 		<label asp-for="Name" class="form-label"></label>
@@ -70,29 +19,10 @@
 		<input class="form-control" asp-for="Description">
 		<span asp-validation-for="Description" class="text-danger"></span>
 	</div>
-	@* @{ *@
-	@*     if (ViewBag.ActionType == "Create") *@
-	@*     { *@
-	@*         <div class="mb-3"> *@
-	@*             <label asp-for="Image.File" class="form-label"></label> *@
-	@*             <input class="form-control" asp-for="Image.File" accept="image/*"> *@
-	@*             <span asp-validation-for="Image.File" class="text-danger"></span> *@
-	@*         </div> *@
-	@*     } *@
-	@*     else *@
-	@*     { *@
-	@*         <input hidden asp-for="Id"/> *@
-	@*         <input hidden asp-for="StorageId"/> *@
-	@*         <input hidden asp-for="ImageId"/> *@
-	@*     } *@
-	@* } *@
-	<input hidden asp-for="Id"/>
-	<input hidden asp-for="StorageId"/>
-	<input hidden asp-for="ImageId"/>
 	<div class="mb-3">
-		<label asp-for="Storage.Name" class="form-label"></label>
-		<select class="form-control" asp-items="ViewBag.StorageName"></select>
-		<span asp-validation-for="Storage.Name" class="text-danger"></span>
+		<label asp-for="StorageId" class="form-label"></label>
+		<select class="form-select" asp-for="StorageId" asp-items="ViewBag.StorageId"></select>
+		<span asp-validation-for="StorageId" class="text-danger"></span>
 	</div>
 	<div class="mb-3">
 		<label asp-for="Price" class="form-label"></label>
@@ -102,6 +32,6 @@
 
 	<div class="pt-3">
 		<input type="submit" class="btn btn-primary" value="Save"/>
-		<a class="btn btn-danger ms-3" asp-controller="Products" asp-action="Index">Cancel</a>
+		<a class="btn btn-danger ms-3" asp-controller="Products" asp-action="Edit">Cancel</a>
 	</div>
 </form>

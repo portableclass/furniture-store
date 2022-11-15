@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FurnitureStore.Data;
 using FurnitureStore.Data.Models;
-using FurnitureStore.ViewModel;
+using FurnitureStore.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 
 namespace FurnitureStore.Controllers

@@ -13,37 +13,7 @@ public class DbObjects
     private static Dictionary<string, Customer> _customers;
     private static Dictionary<string, Worker> _workers;
     private static Dictionary<string, Image> _images;
-    // private static Dictionary<string, User> _users;
-    //
-    // public static Dictionary<string, User> Users
-    // {
-    // 	get
-    // 	{
-    // 		if (_users != null) return _users;
-    // 		var list2 = new[]
-    // 		{
-    // 			new User()
-    // 			{
-    // 				Username = "admin",
-    // 				Password = HashPasswordHelper.HashPassword("1234"),
-    // 				// Role = Role.Administrator,
-    // 				Worker = Workers["Федотова"]
-    // 			},
-    // 			new User()
-    // 			{
-    // 				Username = "user",
-    // 				Password = HashPasswordHelper.HashPassword("1234"),
-    // 				// Role = Role.User,
-    // 				Worker = Workers["Елисеев"]
-    // 			},
-    // 		};
-    // 		_users = new Dictionary<string, User>();
-    // 		foreach (var el in list2)
-    // 			_users.Add(el.Username, el);
-    //
-    // 		return _users;
-    // 	}
-    // }
+
     public static Dictionary<string, Image> Images
     {
         get
@@ -643,12 +613,7 @@ public class DbObjects
             var result = userManager.CreateAsync(user, "1234").GetAwaiter().GetResult();
             if (result.Succeeded)
             {
-                // var claims = new List<Claim>
-                // {
-                // 	new Claim(ClaimTypes.Name,user.UserName),
-                // 	new Claim(ClaimTypes.Role,"Administrator")
-                // };
-                userManager.AddClaimAsync(user,
+	            userManager.AddClaimAsync(user,
                         new Claim(ClaimTypes.Role, "Administrator"))
                     .GetAwaiter()
                     .GetResult();

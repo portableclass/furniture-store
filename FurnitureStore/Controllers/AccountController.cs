@@ -53,17 +53,14 @@ public class AccountController : Controller
 	[AllowAnonymous]
 	public async Task<IActionResult> Login(AccountIndexViewModel model)
 	{
+		model.IsValid = "is-invalid";
 		if (!ModelState.IsValid)
-		{
-			model.IsValid = "is-invalid";
 			return View(model);
-		}
 
 		var check = await _userManager.FindByNameAsync(model.Username);
 		if (check == null)
 		{
 			ModelState.AddModelError("", "User not found");
-			model.IsValid = "is-invalid";
 			return View(model);
 		}
 
@@ -72,7 +69,6 @@ public class AccountController : Controller
 			return Redirect("/Home/Index");
 
 		ModelState.AddModelError("", "Password not correct");
-		model.IsValid = "is-invalid";
 		return View(model);
 	}
 

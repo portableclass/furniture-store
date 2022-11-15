@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc;
@@ -52,32 +48,29 @@ namespace FurnitureStore.Controllers
 		[HttpPost]
 		public IActionResult Index(ProductIndexViewModel model)
 		{
-			string sortingField = model.SortingField;
-			string sortingTrend = model.SortingTrend;
-
-			var appDbContext = sortingTrend switch
+			var appDbContext = model.SortingTrend switch
 			{
-				"ASC" => sortingField switch
+				"ASC" => model.SortingField switch
 				{
-					"1" => _context.Product.OrderBy(p => p.Name).Include(i => i.Image).Include(s => s.Storage),
-					"2" => _context.Product.OrderBy(p => p.Price).Include(i => i.Image).Include(s => s.Storage),
-					"3" => _context.Product.OrderBy(p => p.Description)
+					"Name" => _context.Product.OrderBy(p => p.Name).Include(i => i.Image).Include(s => s.Storage),
+					"Price" => _context.Product.OrderBy(p => p.Price).Include(i => i.Image).Include(s => s.Storage),
+					"Description" => _context.Product.OrderBy(p => p.Description)
 						.Include(i => i.Image)
 						.Include(s => s.Storage),
 					_ => _context.Product.Include(i => i.Image).Include(s => s.Storage)
 				},
-				"DESC" => sortingField switch
+				"DESC" => model.SortingField switch
 				{
-					"1" => _context.Product.OrderByDescending(p => p.Name)
+					"Name" => _context.Product.OrderByDescending(p => p.Name)
 						.Include(i => i.Image)
 						.Include(s => s.Storage),
-					"2" => _context.Product.OrderByDescending(p => p.Price)
+					"Price" => _context.Product.OrderByDescending(p => p.Price)
 						.Include(i => i.Image)
 						.Include(s => s.Storage),
-					"3" => _context.Product.OrderByDescending(p => p.Description)
+					"Description" => _context.Product.OrderByDescending(p => p.Description)
 						.Include(i => i.Image)
 						.Include(s => s.Storage),
-					_ => _context.Product.OrderByDescending(p => p.Name)
+					_ => _context.Product
 						.Include(i => i.Image)
 						.Include(s => s.Storage)
 				},
@@ -114,9 +107,8 @@ namespace FurnitureStore.Controllers
 		// GET: Products/Create
 		public IActionResult Create()
 		{
-			// ViewData["ImageId"] = new SelectList(_context.Image, "Id", "Id");
-			// ViewData["StorageId"] = new SelectList(_context.Storage, "Id", "Id");
-			return View("Create");
+			ViewData["StorageId"] = new SelectList(_context.Storage, "Id", "Name");
+			return View();
 		}
 
 		// POST: Products/Create
@@ -129,6 +121,7 @@ namespace FurnitureStore.Controllers
 			Product product
 		)
 		{
+			ViewData["StorageId"] = new SelectList(_context.Storage, "Id", "Name");
 			if (!ModelState.IsValid) return View(product);
 
 			// _context.Add(product);
@@ -173,15 +166,13 @@ namespace FurnitureStore.Controllers
 				Description = product.Description,
 				Image = image,
 				Price = product.Price,
-				StorageId = 1,
+				StorageId = product.StorageId,
 			};
 
 			await _context.Product.AddAsync(newProduct);
 			await _context.SaveChangesAsync();
 
 			return RedirectToAction(nameof(Index));
-			// ViewData["ImageId"] = new SelectList(_context.Image, "Id", "Id", product.ImageId);
-			// ViewData["StorageId"] = new SelectList(_context.Storage, "Id", "Id", product.StorageId);
 		}
 
 		// GET: Products/Edit/5
@@ -198,8 +189,7 @@ namespace FurnitureStore.Controllers
 				return NotFound();
 			}
 
-			// ViewData["ImageId"] = new SelectList(_context.Image, "Id", "Id", product.ImageId);
-			// ViewData["StorageName"] = new SelectList(_context.Storage, "Name", "Name", product.Storage.Name);
+			ViewData["StorageId"] = new SelectList(_context.Storage, "Id", "Name");
 			return View(product);
 		}
 
@@ -207,48 +197,19 @@ namespace FurnitureStore.Controllers
 		// To protect from overposting attacks, enable the specific properties you want to bind to.
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
-		// [ValidateAntiForgeryToken]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(
 			// int id,
-			// [Bind("Id,Name,Description,Price,StorageId,ImageId")]
-			Product product
+			[Bind("Id,Name,Description,Price,StorageId,ImageId")]
+			Product model
 		)
 		{
-			// if (id != product.Id)
-			// {
-			//     return NotFound();
-			// }
+			if (!ModelState.IsValid)
+				return View(model);
 
-			// if (ModelState.IsValid)
-			// {
-			//     try
-			//     {
-			//         _context.Update(product);
-			//         await _context.SaveChangesAsync();
-			//     }
-			//     catch (DbUpdateConcurrencyException)
-			//     {
-			//         if (!ProductExists(product.Id))
-			//         {
-			//             return NotFound();
-			//         }
-			//         else
-			//         {
-			//             throw;
-			//         }
-			//     }
-			//     return RedirectToAction(nameof(Index));
-			// }
-			// ViewData["ImageId"] = new SelectList(_context.Image, "Id", "Id", product.ImageId);
-			// ViewData["StorageId"] = new SelectList(_context.Storage, "Id", "Id", product.StorageId);
-			// return View(product);
-
-			// if (!ModelState.IsValid)
-			//     return View(product);
-
-			if (product.Id != 0)
+			if (model.Id != 0)
 			{
-				_context.Product.Update(product);
+				_context.Product.Update(model);
 				await _context.SaveChangesAsync();
 				return RedirectToAction(nameof(Index));
 			}
@@ -311,26 +272,9 @@ namespace FurnitureStore.Controllers
 				case "csv":
 				{
 					var builder = new StringBuilder();
-					//   var
-					// head = typeof(Product)
-					//    .GetProperties()
-					//    .Aggregate(
-					//     string.Empty,
-					//     (current, prop) => current + $"{prop.Name},"
-					// );
-					//   builder.AppendLine(head);
 					builder.AppendLine("Id,Name,Description,Price,StorageId,ImageId");
 					foreach (var product in appDbContext)
 					{
-						//   var row = typeof(Product)
-						//    .GetProperties()
-						//    .Aggregate(
-						//     string.Empty,
-						//     (current, prop) => current + $"{prop.GetValue(product)},"
-						// );
-						//
-						//   builder.AppendLine(row);
-
 						builder.AppendLine($"{product.Id}," +
 						                   $"{product.Name}," +
 						                   $"{product.Description}," +
@@ -347,27 +291,16 @@ namespace FurnitureStore.Controllers
 					{
 						var worksheet = workbook.Worksheets.Add("Products");
 						var currentRow = 1;
-						// var i = 1;
-						// foreach (var prop in typeof(Product).GetProperties())
-						// {
-						//  worksheet.Cell(currentRow, i).Value = prop.Name;
-						//  i++;
-						// }
 						worksheet.Cell(currentRow, 1).Value = "Id";
 						worksheet.Cell(currentRow, 2).Value = "Name";
 						worksheet.Cell(currentRow, 3).Value = "Description";
 						worksheet.Cell(currentRow, 4).Value = "Price";
 						worksheet.Cell(currentRow, 5).Value = "StorageId";
 						worksheet.Cell(currentRow, 6).Value = "ImageId";
+
 						foreach (var product in appDbContext)
 						{
 							currentRow++;
-							// var j = 1;
-							// foreach (var prop in typeof(Product).GetProperties())
-							// {
-							//  worksheet.Cell(currentRow, j).Value = prop.GetValue(product);
-							//  j++;
-							// }
 							worksheet.Cell(currentRow, 1).Value = product.Id;
 							worksheet.Cell(currentRow, 2).Value = product.Name;
 							worksheet.Cell(currentRow, 3).Value = product.Description;
